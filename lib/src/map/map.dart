@@ -22,11 +22,11 @@ class MapControllerImpl implements MapController {
     _mapEventSink.close();
   }
 
-  late MapState _state;
+  late MapState mapState;
 
   @override
   set state(MapState state) {
-    _state = state;
+    mapState = state;
     if (!_readyCompleter.isCompleted) {
       _readyCompleter.complete();
     }
@@ -35,13 +35,13 @@ class MapControllerImpl implements MapController {
   @override
   MoveAndRotateResult moveAndRotate(LatLng center, double zoom, double degree,
       {String? id}) {
-    return _state.moveAndRotate(center, zoom, degree,
+    return mapState.moveAndRotate(center, zoom, degree,
         source: MapEventSource.mapController, id: id);
   }
 
   @override
   bool move(LatLng center, double zoom, {String? id}) {
-    return _state.move(center, zoom,
+    return mapState.move(center, zoom,
         id: id, source: MapEventSource.mapController);
   }
 
@@ -51,7 +51,7 @@ class MapControllerImpl implements MapController {
     FitBoundsOptions? options =
         const FitBoundsOptions(padding: EdgeInsets.all(12)),
   }) {
-    _state.fitBounds(bounds, options!);
+    mapState.fitBounds(bounds, options!);
   }
 
   @override
@@ -60,40 +60,41 @@ class MapControllerImpl implements MapController {
     FitBoundsOptions? options =
         const FitBoundsOptions(padding: EdgeInsets.all(12)),
   }) {
-    return _state.centerZoomFitBounds(bounds, options!);
+    return mapState.centerZoomFitBounds(bounds, options!);
   }
 
   @override
-  LatLng get center => _state.center;
+  LatLng get center => mapState.center;
 
   @override
-  LatLngBounds? get bounds => _state.bounds;
+  LatLngBounds? get bounds => mapState.bounds;
 
   @override
-  double get zoom => _state.zoom;
+  double get zoom => mapState.zoom;
 
   @override
-  double get rotation => _state.rotation;
+  double get rotation => mapState.rotation;
 
   @override
   bool rotate(double degree, {String? id}) {
-    return _state.rotate(degree, id: id, source: MapEventSource.mapController);
+    return mapState.rotate(degree,
+        id: id, source: MapEventSource.mapController);
   }
 
   @override
   CustomPoint latLngToScreenPoint(LatLng latLng) {
-    return _state.latLngToScreenPoint(latLng);
+    return mapState.latLngToScreenPoint(latLng);
   }
 
   @override
   LatLng? pointToLatLng(CustomPoint localPoint) {
-    return _state.pointToLatLng(localPoint);
+    return mapState.pointToLatLng(localPoint);
   }
 
   CustomPoint<num> rotatePoint(
       CustomPoint<num> mapCenter, CustomPoint<num> point,
       {bool counterRotation = true}) {
-    return _state.rotatePoint(mapCenter, point,
+    return mapState.rotatePoint(mapCenter, point,
         counterRotation: counterRotation);
   }
 
